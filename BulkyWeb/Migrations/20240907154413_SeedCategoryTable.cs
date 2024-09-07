@@ -17,9 +17,9 @@ namespace BulkyWeb.Migrations
                 columns: new[] { "Id", "DisplayOrder", "Name" },
                 values: new object[,]
                 {
-                    { 1, "1", "Action" },
-                    { 2, "2", "SciFi" },
-                    { 3, "3", "History" }
+                    { 1, 1, "Action" },
+                    { 2, 2, "SciFi" },
+                    { 3, 3, "History" }
                 });
         }
 
