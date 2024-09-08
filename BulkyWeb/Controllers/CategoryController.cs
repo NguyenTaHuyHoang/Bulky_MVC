@@ -21,12 +21,19 @@ namespace BulkyWeb.Controllers
         {
             return View();
         }
+
+        // API
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-            _db.Categories.Add(obj);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            // Xử lí điều kiện bên Category.cs
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
         }
     }
 }
