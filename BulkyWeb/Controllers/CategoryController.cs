@@ -21,7 +21,7 @@ namespace BulkyWeb.Controllers
         {
             return View();
         }
-        // API
+        // API Create
         [HttpPost]
         public IActionResult Create(Category obj)
         {
@@ -52,18 +52,14 @@ namespace BulkyWeb.Controllers
             }
             return View(categoryFromDb);
         }
-        // API
+        // API Update
         [HttpPost]
         public IActionResult Edit(Category obj)
         {
-            if (obj.Name == obj.DisplayOrder.ToString())
-            {
-                ModelState.AddModelError("Name", "The Display Order can't exactly match the Name");
-            }
             // Xử lí điều kiện bên Category.cs
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
+                _db.Categories.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
