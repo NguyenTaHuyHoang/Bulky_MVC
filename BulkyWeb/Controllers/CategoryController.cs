@@ -26,6 +26,10 @@ namespace BulkyWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
+            if(obj.Name == obj.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("Name", "The Display Order can't exactly match the Name");
+            }
             // Xử lí điều kiện bên Category.cs
             if (ModelState.IsValid)
             {
