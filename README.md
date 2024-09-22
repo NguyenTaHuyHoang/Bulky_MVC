@@ -9,11 +9,8 @@ Our backend empowers users to create schedules, build habits, and enhance produc
 
 ## Technologies Used
 
-- **Go (Golang)**: Go is a statically typed, compiled language known for its performance and simplicity, serving as the foundation for this project.
-- **gin**: Gin is a library that facilitates API development for this project.
-- **gorm**: gorm is a library that enables database connectivity to MySQL and data handling.
-- **jwt**: JWT is a library used for authentication and authorization.
-- **swagger**: Swagger to write the apis instructions for my app.
+- **.Net**:
+- **MVC**: Gin is a library that facilitates API development for this project.
 
 ## Features
 
