@@ -1,7 +1,7 @@
 # Back-end for Best Habit Mobile Application
 
 - Author: Nguyen Ta Huy Hoang
-- GitHub: [Ng_t.hHoang](https://github.com/NguyenTaHuyHoang)
+- GitHub: [Nguyen Ta Huy Hoang](https://github.com/NguyenTaHuyHoang)
 
 ## Overview
 
@@ -26,7 +26,7 @@ Our backend empowers users to create schedules, build habits, and enhance produc
 1. Clone the repository:
 
 ```
-git clone https://github.com/nvhai248/BE_BestHabit
+git clone 
 ```
 
 2. Install dependencies (optional if the vendor folder is included):
@@ -41,8 +41,7 @@ go get -u all
 go run ./main.go
 ```
 
-After you run the server, you can view all detail about api by click this url [swagger UI](http://localhost:8080/swagger/index.html)
 
 ## Contact
 
-If you have any questions or suggestions, please feel free to contact us at nvhai2408@gmail.com.
+If you have any questions or suggestions, please feel free to contact us at nvthh01082002@gmail.com
