@@ -1,4 +1,4 @@
-# Back-end for Best Habit Mobile Application
+# Fullstack for Bulky web MVC
 
 - Author: Nguyen Ta Huy Hoang
 - GitHub: [Nguyen Ta Huy Hoang](https://github.com/NguyenTaHuyHoang)
