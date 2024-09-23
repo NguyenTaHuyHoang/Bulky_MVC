@@ -1,7 +1,7 @@
 # Fullstack for Bulky web MVC
 
 - Author: Nguyen Ta Huy Hoang
-- GitHub: [Nguyen Ta Huy Hoang](https://github.com/NguyenTaHuyHoang)
+- GitHub: [Bulky_web](https://github.com/NguyenTaHuyHoang)
 
 ## Overview
 
