@@ -14,9 +14,6 @@ Our backend empowers users to create schedules, build habits, and enhance produc
 
 ## Features
 
-- Provides RESTful APIs for best habit mobile applications.
-- Implements authentication and authorization using JWT.
-- Using OAuth to simple authenticate.
 
 ## Usage
 
