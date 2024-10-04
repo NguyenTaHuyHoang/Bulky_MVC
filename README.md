@@ -14,7 +14,6 @@ Our backend empowers users to create schedules, build habits, and enhance produc
 
 ## Features
 
-
 ## Usage
 
 1. Clone the repository:
