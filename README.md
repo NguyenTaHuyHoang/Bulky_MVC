@@ -6,7 +6,7 @@
 ## Overview
 
 Our backend empowers users to create schedules, build habits, and enhance productivity with ease through reminders and personalized goal-setting for activities, studies, and work in a user-friendly mobile interface.
- 
+
 ## Technologies Used
 
 - **.NET**:
