@@ -10,12 +10,11 @@ Our backend empowers users to create schedules, build habits, and enhance produc
 ## Technologies Used
 
 - **.NET**:
-- **MVC**: Gin is a library that facilitates API development for this project.
+- **MVC**:
 
 ## Features
 
 ## Usage 
-
 
 ## Contact
 
