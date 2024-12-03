@@ -6,15 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Bulky.DataAccess.Data;
 using Bulky.DataAccess.Repository.IRepository;
-using Fluent.Infrastructure.FluentModel;
 using Microsoft.EntityFrameworkCore;
+
 namespace Bulky.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly ApplicationDBContext _db;
         internal DbSet<T> dbSet;
-        public Repository(ApplicationDbContext db)
+        public Repository(ApplicationDBContext db)
         {
             _db = db;
             this.dbSet = _db.Set<T>();
@@ -42,7 +42,7 @@ namespace Bulky.DataAccess.Repository
             dbSet.Remove(entity);
         }
 
-        public void Remove(IEnumerable<T> entity)
+        public void RemoveRange(IEnumerable<T> entity)
         {
             dbSet.RemoveRange(entity);    
         }

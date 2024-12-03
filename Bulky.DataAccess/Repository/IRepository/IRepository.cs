@@ -11,10 +11,14 @@ namespace Bulky.DataAccess.Repository.IRepository
     {
         //T - Category
         IEnumerable<T> GetAll();
+
+        // Biểu thức chung của dòng 16 là dòng 17
+        // Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==id);
         T Get(Expression<Func<T, bool>> filter);
+
         void Add(T entity);
         void Remove(T entity);
-        void Remove(IEnumerable<T> entity);
+        void RemoveRange(IEnumerable<T> entity);
 
 
     }
