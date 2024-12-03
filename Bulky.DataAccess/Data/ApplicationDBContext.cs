@@ -1,7 +1,7 @@
-﻿using BulkyWeb.Models;
+﻿using Bulky.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BulkyWeb.Data
+namespace Bulky.DataAccess.Data
 {
     public class ApplicationDBContext : DbContext
     {
@@ -10,7 +10,7 @@ namespace BulkyWeb.Data
 
         }
 
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Bulky.Models.Category> Categories { get; set; }
 
         /* Seeding category table */
         protected override void OnModelCreating(ModelBuilder modelBuilder)
