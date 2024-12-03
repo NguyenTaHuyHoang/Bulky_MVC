@@ -17,29 +17,35 @@ namespace BulkyWeb.Controllers
             return View(objCategoryList);
         }
 
+        // API Create
         public IActionResult Create()
         {
             return View();
         }
-        // API Create
+
         [HttpPost]
         public IActionResult Create(Category obj)
         {
+            // Xử lý điều kiện khi name == displayOrder
             if(obj.Name == obj.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("Name", "The Display Order can't exactly match the Name");
             }
-            // Xử lí điều kiện bên Category.cs
+            // Xử lý điều kiện bên Category.cs
             if (ModelState.IsValid)
             {
                 _db.Categories.Add(obj);
                 _db.SaveChanges();
+                // Sử dụng tempdata để _Notification created thành công
                 TempData["success"] = "Category created successfully";
+                // Chuyển hướng về trang Category/Index
                 return RedirectToAction("Index");
             }
             return View();
         }
 
+
+        // API Update
         public IActionResult Edit(int? id)
         {
             if(id == null || id == 0)
@@ -53,7 +59,7 @@ namespace BulkyWeb.Controllers
             }
             return View(categoryFromDb);
         }
-        // API Update
+
         [HttpPost]
         public IActionResult Edit(Category obj)
         {
@@ -62,12 +68,15 @@ namespace BulkyWeb.Controllers
             {
                 _db.Categories.Update(obj);
                 _db.SaveChanges();
+                // Sử dụng tempdata để _Notification updated thành công
                 TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index");
             }
             return View();
         }
 
+
+        // API Delete
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
@@ -81,7 +90,7 @@ namespace BulkyWeb.Controllers
             }
             return View(categoryFromDb);
         }
-        // API Delete
+
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
@@ -92,6 +101,7 @@ namespace BulkyWeb.Controllers
             }
             _db.Categories.Remove(obj);
             _db.SaveChanges();
+            // Sử dụng tempdata để _Notification deleted thành công
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index");
         }

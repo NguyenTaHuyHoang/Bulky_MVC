@@ -12,6 +12,7 @@ namespace BulkyWeb.Data
 
         public DbSet<Category> Categories { get; set; }
 
+        /* Seeding category table */
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
