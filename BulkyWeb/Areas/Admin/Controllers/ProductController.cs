@@ -21,8 +21,8 @@ namespace BulkyWeb.Areas.Admin.Controllers
             return View(objProductList);
         }
 
-        // API Create
-        public IActionResult Create()
+        // API Create and Insert
+        public IActionResult Upsert(int? id)
         {
             // Projection in EF Core
             //IEnumerable<SelectListItem> objCategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
@@ -30,7 +30,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
             //    Text = i.Name,
             //    Value = i.Id.ToString()
             //});
-
             //ViewBag.CategoryList = objCategoryList;
             //ViewData["CategoryList"]= objCategoryList;
             ProductVM productVM = new ProductVM()
@@ -42,11 +41,22 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 }),
                 Product = new Product()
             };
-            return View(productVM);
+            if (id == null || id == 0)
+            {
+                // Create
+                return View(productVM);
+            }
+            else
+            {
+                // Update
+                productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
+                return View(productVM);
+            }
+
         }
 
         [HttpPost]
-        public IActionResult Create(ProductVM productVM)
+        public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
             // Xử lý điều kiện bên Product.cs
             if (ModelState.IsValid)
@@ -58,7 +68,8 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 // Chuyển hướng về trang Product/Index
                 return RedirectToAction("Index");
             }
-            else {
+            else
+            {
                 productVM.CategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.Name,
@@ -66,41 +77,8 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 });
                 return View(productVM);
             }
-            
+
         }
-
-
-        // API Update
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Product? productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
-            // Product? productFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==id);
-            if (productFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(productFromDb);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(Product obj)
-        {
-            // Xử lí điều kiện bên Product.cs
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Product.Update(obj);
-                _unitOfWork.Save();
-                // Sử dụng tempdata để _Notification updated thành công
-                TempData["success"] = "Product updated successfully";
-                return RedirectToAction("Index");
-            }
-            return View();
-        }
-
 
         // API Delete
         public IActionResult Delete(int? id)
