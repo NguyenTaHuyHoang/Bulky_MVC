@@ -1,5 +1,6 @@
 ﻿using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+using Bulky.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -24,31 +25,48 @@ namespace BulkyWeb.Areas.Admin.Controllers
         public IActionResult Create()
         {
             // Projection in EF Core
-            IEnumerable<SelectListItem> objCategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
-            //ViewBag.CategoryList = objCategoryList;
-            ViewData["CategoryList"]= objCategoryList;
+            //IEnumerable<SelectListItem> objCategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
+            //{
+            //    Text = i.Name,
+            //    Value = i.Id.ToString()
+            //});
 
-            return View();
+            //ViewBag.CategoryList = objCategoryList;
+            //ViewData["CategoryList"]= objCategoryList;
+            ProductVM productVM = new ProductVM()
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                Product = new Product()
+            };
+            return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Create(Product obj)
+        public IActionResult Create(ProductVM productVM)
         {
             // Xử lý điều kiện bên Product.cs
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(obj);
+                _unitOfWork.Product.Add(productVM.Product);
                 _unitOfWork.Save();
                 // Sử dụng tempdata để _Notification created thành công
                 TempData["success"] = "Product created successfully";
                 // Chuyển hướng về trang Product/Index
                 return RedirectToAction("Index");
             }
-            return View();
+            else {
+                productVM.CategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                });
+                return View(productVM);
+            }
+            
         }
 
 
