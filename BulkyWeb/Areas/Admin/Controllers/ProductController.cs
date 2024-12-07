@@ -10,13 +10,16 @@ namespace BulkyWeb.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ProductController(IUnitOfWork unitOfWork)
+        // truy cập vào file wwwroot
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
-            List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
+            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
 
             return View(objProductList);
         }
@@ -61,12 +64,45 @@ namespace BulkyWeb.Areas.Admin.Controllers
             // Xử lý điều kiện bên Product.cs
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(productVM.Product);
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+                    {
+                        // delete the old image
+                        // TrimStart('\\'): Loại bỏ ký tự \ ở đầu chuỗi để tạo đường dẫn chính xác.
+                        var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+                    // cung cap ten ngau nhien cho file
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath + @"/images/product");
+
+                    // sao chep tep va luu vao wwwroot/images/product
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    productVM.Product.ImageUrl = @"\images\product\" + fileName;
+                }
+                if (productVM.Product.Id != 0)
+                {
+                    // Update
+                    _unitOfWork.Product.Update(productVM.Product);
+                }
+                else
+                {
+                    // Add (Insert)
+                    _unitOfWork.Product.Add(productVM.Product);
+                }
                 _unitOfWork.Save();
                 // Sử dụng tempdata để _Notification created thành công
                 TempData["success"] = "Product created successfully";
                 // Chuyển hướng về trang Product/Index
-                return RedirectToAction("Index");
+                return RedirectToAction("Index");      
             }
             else
             {
@@ -75,6 +111,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
                     Text = i.Name,
                     Value = i.Id.ToString()
                 });
+
                 return View(productVM);
             }
 
