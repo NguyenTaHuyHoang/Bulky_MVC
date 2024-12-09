@@ -3,7 +3,7 @@
 ### Author: Nguyễn Tạ Huy Hoàng  
 GitHub: [Bulky Web Repository](https://github.com/NguyenTaHuyHoang)  
 
---- 
+---
 
 ## Overview  
 The **Bulky Book Web Application** is a comprehensive project designed to teach and demonstrate advanced concepts in **ASP.NET Core MVC**. It empowers users to:  
