@@ -15,7 +15,7 @@ The **Bulky Book Web Application** is a comprehensive project designed to teach 
 This application is developed with a focus on providing a user-friendly interface and robust backend functionality.  
 
 ---
- 
+
 ## Features  
 - **User Management**:  
   - Integrate Identity Framework with additional user fields.  
