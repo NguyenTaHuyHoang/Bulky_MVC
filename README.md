@@ -1,6 +1,6 @@
 # Bulky Book Web Application - Fullstack Development  
-
-### Author: Nguyễn Tạ Huy Hoàng  
+ 
+### Author: Nguyễn Tạ Huy Hoàng
 GitHub: [Bulky Web Repository](https://github.com/NguyenTaHuyHoang)  
 
 ---
