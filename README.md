@@ -2,7 +2,7 @@
  
 ### Author: Nguyễn Tạ Huy Hoàng
 GitHub: [Bulky Web Repository](https://github.com/NguyenTaHuyHoang)  
- 
+
 ---
 
 ## Overview  
