@@ -110,9 +110,10 @@ namespace BulkyWeb.Areas.Identity.Pages.Account
             public IEnumerable<SelectListItem> RoleList { get; set; }
         }
 
-
+        // Khởi tạo các vai trò (Roles):
         public async Task OnGetAsync(string returnUrl = null)
         {
+            // Phương thức không đồng bộ
             if (!_roleManager.RoleExistsAsync(SD.Role_Customer).GetAwaiter().GetResult())
             {
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Customer)).GetAwaiter().GetResult();
@@ -133,6 +134,8 @@ namespace BulkyWeb.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
+
+        // Xử lý đăng ký:
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -145,6 +148,7 @@ namespace BulkyWeb.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
+                // Nếu thành công, nó tạo mã thông báo email và gửi email
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

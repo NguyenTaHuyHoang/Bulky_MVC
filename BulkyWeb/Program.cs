@@ -1,4 +1,4 @@
-using Bulky.DataAccess.Data;
+﻿using Bulky.DataAccess.Data;
 using Bulky.DataAccess.Repository;
 using Bulky.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -8,14 +8,27 @@ using Bulky.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container. (Thêm dịch vụ MVC)
 builder.Services.AddControllersWithViews();
 
 // Add DbContext
 builder.Services.AddDbContext<ApplicationDBContext>(options=>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDBContext>().AddDefaultTokenProviders();
+// Cấu hình Identity 
+builder.Services.AddIdentity<IdentityUser, IdentityRole>() //  Cấu hình dịch vụ Identity cho người dùng (IdentityUser) và vai trò (IdentityRole).
+        .AddEntityFrameworkStores<ApplicationDBContext>() //  Sử dụng ApplicationDBContext để lưu trữ dữ liệu Identity.
+        .AddDefaultTokenProviders(); // Thêm các token provider mặc định
+
+// Cấu hình cookie xác thực
+// Phương thức này được dùng để tùy chỉnh hành vi của cookie xác thực trong ứng dụng Identity.
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Identity/Account/Login";
+    options.LogoutPath = $"/Identity/Account/Logout";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+});
+
 
 // Add RazorPage Identity
 builder.Services.AddRazorPages();
