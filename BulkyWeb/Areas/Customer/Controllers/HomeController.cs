@@ -1,6 +1,8 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.Security.Claims;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BulkyWeb.Areas.Customer.Controllers
@@ -25,8 +27,41 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
         public IActionResult Details(int productId)
         {
-            Product product = _unitOfWork.Product.Get(u=>u.Id==productId, includeProperties: "Category");
-            return View(product);
+            ShoppingCart cart = new()
+            {
+                Product = _unitOfWork.Product.Get(u => u.Id == productId, includeProperties: "Category"),
+                Count = 1,
+                ProductId = productId,
+            };
+            return View(cart);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var clamesIdentity = (ClaimsIdentity)User.Identity; //  lấy thông tin về người dùng hiện tại từ thuộc tính User, vốn chứa chi tiết về người dùng đã đăng nhập. Đối tượng Identity được chuyển sang kiểu ClaimsIdentity để truy cập các claim liên quan đến người dùng.
+            var userId = clamesIdentity.FindFirst(ClaimTypes.NameIdentifier).Value; // lấy ID duy nhất của người dùng (thường là ID người dùng trong hệ thống) từ các claim của người dùng. 
+
+            shoppingCart.ApplicationUserId = userId;
+
+            ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u=>u.ApplicationUserId == userId && u.ProductId == shoppingCart.ProductId);
+            if(cartFromDb != null)
+            {
+                // shopping card exist
+                cartFromDb.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingCart.Update(cartFromDb);
+            }
+            else
+            {
+                // add shopping cart record
+                _unitOfWork.ShoppingCart.Add(shoppingCart);
+            }
+            TempData["success"] = "Cart updated successfully";
+
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()
