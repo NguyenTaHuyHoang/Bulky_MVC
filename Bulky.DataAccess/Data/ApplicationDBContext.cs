@@ -19,6 +19,7 @@ namespace Bulky.DataAccess.Data
         public DbSet<Company> Companies { get; set; }
 
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
         /* Seeding category table */
         protected override void OnModelCreating(ModelBuilder modelBuilder)
