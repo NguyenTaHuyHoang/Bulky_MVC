@@ -52,10 +52,10 @@ namespace BulkyWeb.Areas.Customer.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        /*   public IActionResult Minus(int cardId)
+        public IActionResult Minus(int cardId)
            {
-               var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cardId);
-               if (cartFromDb.Count <= 1)
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cardId);
+            if (cartFromDb.Count <= 1)
                {
                    // remove 
                    _unitOfWork.ShoppingCart.Remove(cartFromDb);
@@ -69,14 +69,14 @@ namespace BulkyWeb.Areas.Customer.Controllers
                return RedirectToAction(nameof(Index));
            }
 
-           public IActionResult Remove(int cardId)
+        public IActionResult Remove(int cardId)
            {
                var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cardId);
                // remove 
                _unitOfWork.ShoppingCart.Remove(cartFromDb);
                _unitOfWork.Save();
                return RedirectToAction(nameof(Index));
-           }*/
+           }
 
 
         private double GetPriceBasedOnQuantity(ShoppingCart shoppingCart)

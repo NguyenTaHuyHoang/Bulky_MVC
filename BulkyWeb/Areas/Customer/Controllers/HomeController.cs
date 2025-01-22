@@ -51,15 +51,16 @@ namespace BulkyWeb.Areas.Customer.Controllers
                 // shopping card exist
                 cartFromDb.Count += shoppingCart.Count;
                 _unitOfWork.ShoppingCart.Update(cartFromDb);
+                _unitOfWork.Save();
             }
             else
             {
                 // add shopping cart record
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
+                _unitOfWork.Save();
+
             }
             TempData["success"] = "Cart updated successfully";
-
-            _unitOfWork.Save();
 
             return RedirectToAction(nameof(Index));
         }
